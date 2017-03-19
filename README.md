@@ -11,3 +11,11 @@ This repository implements a backend to store players and matches scores. It is 
 - tournament.py - implements the Python code of the project
 - tournament_test.py - implements a testing code (runs the tournament.py file)
 - tournament.sql - implements SQL code to build the tournament db, it's tables and views.
+
+#### *special instructions*
+- install and setup postgresql on your machine plus python 2.7
+- install the psycopg2 library by typing pip install psycopg2
+- clone the repository to your local machine
+- in order to create the db of the tournament enter the postgresql command line from the tournament folder (typing psql)
+- then type into the psql command line '\i tournament.sql'. This should run all the SQL commands from the file as a script.
+
