@@ -1,12 +1,6 @@
 -- Table definitions for the tournament project.
---
--- Put your SQL 'create table' statements in this file; also 'create view'
--- statements if you choose to use it.
---
--- You can write comments in this file by starting them with two dashes, like
--- these lines here.
 
--- if exist drop
+DROP DATABASE if exists tournament;
 
 CREATE DATABASE tournament;
 
@@ -33,9 +27,9 @@ create view allmatchplayers as
 
 -- this view shows a list of players with their total games (doesn't include 0)
 create view totalgames as 
-	 select count(id) as total from allmatchplayers group by id;
+	 select id, count(id) as total from allmatchplayers group by id;
 
--- this view shows to wins the total number of games 
+-- this view adds to wins the total number of games 
 create view standings as 
 	select wins.*, coalesce(totalgames.total,0) as matches
     from wins left join totalgames 
@@ -47,14 +41,14 @@ create view winsrows as
 	select id, name, wins, row_number() over (order by wins desc) as rn 
 	from wins;
 
-# adds the index to winsrows table to match rows.
+-- adds the index to winsrows table to match rows.
 create view winsrowsready as
-	select *, rn/2+rn%2 as x
+	select *, rn/2+rn%2 as x 
 	from winsrows;
 
-# select pairs which are near each other (by wins number)
+-- select pairs which are near each other (by wins number)
 create view pairs as
 	 select a.id as id1, a.name as name1, b.id as id2, b.name as name2 
-	 from winsready a, winsready b 
+	 from winsrowsready a, winsrowsready b 
 	 where a.x=b.x and a.id<b.id;
 
