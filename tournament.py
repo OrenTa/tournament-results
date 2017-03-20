@@ -95,7 +95,7 @@ def reportMatch(winner, loser):
     """
     conn = connect()
     curs = conn.cursor()
-    curs.execute("insert into matches (player1, player2, winner) values (%d, %d, %d)" % (winner,loser,winner))
+    curs.execute("insert into matches (winner,loser) values (%d, %d)" % (winner,loser))
     conn.commit()
     curs.close()
     conn.close()    

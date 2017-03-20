@@ -9,9 +9,8 @@ CREATE DATABASE tournament;
 create table players (id serial PRIMARY KEY, name varchar(30));
 
 create table matches (id serial PRIMARY KEY, 
-					  player1 integer REFERENCES players(id),
-					  player2 integer REFERENCES players(id),
-					  winner integer REFERENCES players(id));
+					  winner integer REFERENCES players(id),
+					  loser integer REFERENCES players(id));
 
 	
 -- this view shows the the list of all players and their associated wins
@@ -22,14 +21,15 @@ create view wins as
 	order by wins desc;
 	
 -- this view shows the list of all players in matches (doesn't include 0)
+-- the view includes a row for each game the player has played. 
 create view allmatchplayers as 
-	select player1 as id from matches union all select player2 as id from matches;
+	select winner as id from matches union all select loser as id from matches;
 
 -- this view shows a list of players with their total games (doesn't include 0)
 create view totalgames as 
 	 select id, count(id) as total from allmatchplayers group by id;
 
--- this view adds to wins the total number of games 
+-- this view adds to the wins view the total number of games as another column
 create view standings as 
 	select wins.*, coalesce(totalgames.total,0) as matches
     from wins left join totalgames 
