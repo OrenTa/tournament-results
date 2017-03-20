@@ -18,13 +18,13 @@ This repository implements a backend to store players and matches scores. It is 
 - clone the repository to your local machine
 - in order to create the db of the tournament enter the postgresql command line from the tournament folder (typing psql)
 - then type into the psql command line:
-'\i tournament.sql'. 
+'$ \i tournament.sql'. 
 This should run all the SQL commands from the file as a script.
 
 ####
 in order to test the tournament backend you can use the included test file.
 type:
-python tournament_test.py
+'$ python tournament_test.py'
 
 you should get a list of test results printed onto the screen with a success message at the end.
 
